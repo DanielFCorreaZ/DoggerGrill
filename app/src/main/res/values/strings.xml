@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Dogger App</string>
+    <string name="miPerfil">Mi Perfil</string>
+    <string name="principal"></string>
+    <string name="tipo1">Prueba nuestros productos</string>
+    <string name="splash">Dogger App</string>
+    <string name="usuario">Nombre de Usuario:</string>
+    <string name="contra">Contraseña:</string>
+    <string name="recontra">Repetir Contraseña:</string>
+    <string name="correo">Correo Electronico:</string>
+    <string name="aceptar">Entrar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="reg">Registrarse</string>
+
+</resources>

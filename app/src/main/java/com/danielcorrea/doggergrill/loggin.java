@@ -58,9 +58,9 @@ public class loggin extends AppCompatActivity {
                 }
 
                 if(l==1 && t==1){
-                    Intent intent= new Intent(loggin.this,MainActivity.class);
-                    intent.putExtra("usu",user);
-                    intent.putExtra("mai",correeo);
+                    Intent intent= new Intent(loggin.this,lista.class);
+                    intent.putExtra("usus",user);
+                    intent.putExtra("mais",correeo);
 
                     startActivity(intent);
                 }

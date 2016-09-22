@@ -17,10 +17,10 @@
         </activity>
         <activity android:name=".loggin" />
         <activity android:name=".register" />
-        <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".miperfil"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".miperfil" />
+        <activity android:name=".lista" />
+        <activity android:name=".clasi"></activity>
     </application>
 
 </manifest>

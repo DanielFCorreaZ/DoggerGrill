@@ -5,6 +5,14 @@
         android:title="@string/miPerfil"/>
 
     <item
+        android:id="@+id/platos"
+        android:title="@string/platos"/>
+
+    <item
+        android:id="@+id/clas"
+        android:title="@string/clas"/>
+
+    <item
         android:id="@+id/mPrincipal"
         android:title="Menu Principal"/>
 </menu>

@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.danielcorrea.doggergrill.Producto1Fragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:textColor="@color/white"
+        android:text="@string/Hamburguesa" />
+
+
+
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:src="@drawable/ham"/>
+            <ImageView
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                android:src="@drawable/prom1"/>
+            <ImageView
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                android:src="@drawable/prom10"/>
+            <ImageView
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                android:src="@drawable/prom9"/>
+
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

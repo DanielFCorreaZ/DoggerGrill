@@ -11,17 +11,13 @@
     android:background="@color/black"
     android:orientation="vertical"
     android:weightSum="1">
+
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="403dp"
         android:src="@drawable/dogger"
+
         />
-    <TextView
-        android:layout_width="388dp"
-        android:layout_height="wrap_content"
-        android:text="@string/splash"
-        android:textColor="@color/white"
-        android:layout_weight="0.38"
-        android:textSize="50dp"
-        android:gravity="center" />
+
 </LinearLayout>

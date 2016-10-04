@@ -20,7 +20,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".miperfil" />
         <activity android:name=".lista" />
-        <activity android:name=".clasi"></activity>
+        <activity android:name=".clasi" />
+        <activity android:name=".prom"></activity>
     </application>
 
 </manifest>

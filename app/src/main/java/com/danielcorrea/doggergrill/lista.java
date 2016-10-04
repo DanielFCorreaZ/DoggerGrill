@@ -2,8 +2,14 @@ package com.danielcorrea.doggergrill;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,12 +27,19 @@ public class lista extends AppCompatActivity {
 
     //final String[] productos = new String[]{"Hanburguesa","Perros","Costillas BBQ","Sanduichs","Cervezas"};
 
+    private String[] opciones = new String[] {"Perfil", "Menu Principal", "Platos","Clasificacion","Cerrar Sesion"};
+    private DrawerLayout drawerLayout;
+    private ListView listView;
+    private ActionBarDrawerToggle drawerToggle;
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
     private Productos[] datos=
             new Productos[]{
                     new Productos(R.drawable.item1,"16000","Hamburguesa","Hamburguesa de dos carnes y doble queso"),
                     new Productos(R.drawable.item2,"12000","Perros","Con todo lo que le puedas hechar"),
                     new Productos(R.drawable.item3,"18000","Costillas BBQ","Costillas con el mejor sabor Grill"),
-                    new Productos(R.drawable.item4,"15000","Sanduich","Los mejores aplastados de la ciudad")
+                    new Productos(R.drawable.item4,"15000","Sandwich","Los mejores aplastados de la ciudad"),
+                    new Productos(R.drawable.beer,"5000","Cerveceria","Las mejores cervezas nacionales")
             };
 
     ListView list;
@@ -37,9 +50,83 @@ public class lista extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
 
+        prefs=getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        editor=prefs.edit();
+
         Bundle extras=getIntent().getExtras();
         user = extras.getString("usus");
         correeo = extras.getString("mais");
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+        drawerLayout = (DrawerLayout) findViewById(R.id.contenedorPrincipal);
+        listView = (ListView) findViewById(R.id.menuIzq);
+
+        listView.setAdapter(new ArrayAdapter<String>(getSupportActionBar().getThemedContext(),
+                android.R.layout.simple_list_item_1, opciones));
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Fragment fragment = null;
+                switch (i){
+                    case(0): //fragment = new SupermanFragment();
+                        Intent intent= new Intent(lista.this, miperfil.class);
+                        intent.putExtra("mais",correeo);
+                        intent.putExtra("usus",user);
+
+
+                        startActivity(intent);
+
+                        break;
+                    case(1): //fragment = new BatmanFragment();
+
+                        break;
+                    case(2): //fragment = new FlashFragment();
+                        Intent intent1= new Intent(lista.this, MainActivity.class);
+                        intent1.putExtra("mais",correeo);
+                        intent1.putExtra("usus",user);
+                        startActivity(intent1);
+                        break;
+                    case(3): Intent intent2= new Intent(lista.this, clasi.class);
+                        intent2.putExtra("mais",correeo);
+                        intent2.putExtra("usus",user);
+
+
+                        startActivity(intent2);
+                       // finish();
+                        break;
+                    case(4):Intent intent3= new Intent(lista.this, loggin.class);
+                        editor.putInt("var",-1);
+                        editor.commit();
+
+                        startActivity(intent3);
+                         finish();
+                        break;
+                }
+                if (i != 3) {
+                   // FragmentManager fragmentManager = getSupportFragmentManager();
+                   // fragmentManager.beginTransaction().replace(R.id.contenedorFrame, fragment).commit();
+
+                }
+                listView.setItemChecked(i,true);
+                drawerLayout.closeDrawer(listView);
+            }
+        });
+
+        drawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.abierto, R.string.cerrado);
+
+        drawerLayout.setDrawerListener(drawerToggle);
+
+
+
+
+
+
+
 
         Adapter adaptador = new Adapter(this,datos);
         list= (ListView) findViewById(R.id.list);
@@ -48,6 +135,26 @@ public class lista extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case(0):editor.putInt("val",0);
+
+                        break;
+                    case(1):editor.putInt("val",1);
+
+                        break;
+                    case(2):editor.putInt("val",2);
+
+                        break;
+                    case(3):editor.putInt("val",3);
+
+                        break;
+                    case(4):editor.putInt("val",4);
+
+                        break;
+
+                } editor.commit();
+                Intent intent4= new Intent(lista.this, prom.class);
+                startActivity(intent4);
 
             }
         });
@@ -87,7 +194,23 @@ public class lista extends AppCompatActivity {
     }
 
 
+
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(Gravity.LEFT);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
@@ -131,7 +254,7 @@ public class lista extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 
 

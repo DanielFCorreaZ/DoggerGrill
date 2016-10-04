@@ -21,4 +21,7 @@
     <string name="casi2">Califica la aplicacion con un numero del 1 al 10</string>
     <string name="casi3">Gracias por ayudarnos a ser mejores !</string>
 
+    <string name="abierto">Open navigation drawer</string>
+    <string name="cerrado">Close navigation drawer</string>
+
 </resources>

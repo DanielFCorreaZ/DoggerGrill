@@ -3,8 +3,8 @@
 	<color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-	<item name="black" type="color">#000000</item>   
-	<item name="navy" type="color">	#000080</item>   
+	<item name="black" type="color">#000000</item>
+	<item name="navy" type="color">	#000080</item>
 	<item name="darkblue" type="color">#00008b</item>
 	<item name="mediumblue" type="color">#0000cd</item>
 	<item name="blue" type="color">#0000ff</item>
@@ -141,12 +141,12 @@
 	<item name="snow" type="color">#fffafa</item>
 	<item name="ivory" type="color">#fffff0</item>
 	<item name="white" type="color">#ffffff</item>
-    
-	
+
+
 	<integer-array name="EditColors">
-	    
-	    <item>@color/black</item>   
-		<item>@color/navy</item>   
+
+	    <item>@color/black</item>
+		<item>@color/navy</item>
 		<item>@color/darkblue</item>
 		<item>@color/mediumblue</item>
 		<item>@color/blue</item>
@@ -284,6 +284,6 @@
 		<item>@color/ivory </item>
 		<item>@color/white </item>
 	</integer-array>
-	
+
 </resources>
 

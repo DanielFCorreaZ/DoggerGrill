@@ -1,8 +1,11 @@
 package com.danielcorrea.doggergrill;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -33,17 +36,28 @@ public class lista extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
-    private Productos[] datos=
+
+    ContentValues dataBD;
+    SQLiteDatabase dbContactos,dbProductos;
+
+    int[] ima = new int[]{R.drawable.item1,R.drawable.item2,R.drawable.item3,R.drawable.item4,R.drawable.beer};
+    String[] prec = new String[]{"16000","12000","18000","15000","5000"};
+    String[] nombr = new String[]{"Hamburguesa","Perros","Costillas BBQ","Sandwich","Cerveceria"};
+    String[] descr = new String[]{"Hamburguesa de dos carnes y doble queso","Con todo lo que le puedas hechar","Costillas con el mejor sabor Grill","Los mejores aplastados de la ciudad","Las mejores cervezas nacionales"};
+
+    private Productos datos[]=
             new Productos[]{
-                    new Productos(R.drawable.item1,"16000","Hamburguesa","Hamburguesa de dos carnes y doble queso"),
-                    new Productos(R.drawable.item2,"12000","Perros","Con todo lo que le puedas hechar"),
-                    new Productos(R.drawable.item3,"18000","Costillas BBQ","Costillas con el mejor sabor Grill"),
-                    new Productos(R.drawable.item4,"15000","Sandwich","Los mejores aplastados de la ciudad"),
-                    new Productos(R.drawable.beer,"5000","Cerveceria","Las mejores cervezas nacionales")
+                    new Productos(),
+                    new Productos(),
+                    new Productos(),
+                    new Productos(),
+                    new Productos()
             };
 
     ListView list;
-    String user,correeo;
+    String name,price,description;
+    int ids;
+    int[] idp= new int[]{0,1,2,3,4};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +67,35 @@ public class lista extends AppCompatActivity {
         prefs=getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
         editor=prefs.edit();
 
-        Bundle extras=getIntent().getExtras();
-        user = extras.getString("usus");
-        correeo = extras.getString("mais");
+        ContactosSQLiteHelper contactos = new ContactosSQLiteHelper(this,"ContactosBD", null, 1);
+        ContactosSQLiteHelper productos = new ContactosSQLiteHelper(this,"ProductosBD", null, 1);
+        dbContactos = contactos.getWritableDatabase();
+        dbProductos = productos.getWritableDatabase();
+        dataBD = new ContentValues();
+
+        for( int i=0;i<=4;i++){
+            dataBD.put("idima",ima[i]);
+            dataBD.put("nombre",nombr[i]);
+            dataBD.put("descrip",descr[i]);
+            dataBD.put("precio",prec[i]);
+
+            dbProductos.insert("Productos",null,dataBD);
+            Cursor c = dbProductos.rawQuery("select * from Productos where nombre='"+nombr[i]+"'",null);
+            if(c.moveToFirst()) {
+
+                idp[i] = c.getInt(0);
+                }
+
+            Cursor c1 = dbProductos.rawQuery("select * from Productos where id='"+idp[i]+"'",null);
+            if(c1.moveToFirst()) {
+                ids = c1.getInt(1);
+                name = c1.getString(2);
+                description = c1.getString(3);
+                price = c1.getString(4);
+            }
+
+           datos[i]= new Productos(ids,price,name,description);
+        }
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
@@ -75,8 +115,7 @@ public class lista extends AppCompatActivity {
                 switch (i){
                     case(0): //fragment = new SupermanFragment();
                         Intent intent= new Intent(lista.this, miperfil.class);
-                        intent.putExtra("mais",correeo);
-                        intent.putExtra("usus",user);
+
 
 
                         startActivity(intent);
@@ -87,13 +126,11 @@ public class lista extends AppCompatActivity {
                         break;
                     case(2): //fragment = new FlashFragment();
                         Intent intent1= new Intent(lista.this, MainActivity.class);
-                        intent1.putExtra("mais",correeo);
-                        intent1.putExtra("usus",user);
+
                         startActivity(intent1);
                         break;
                     case(3): Intent intent2= new Intent(lista.this, clasi.class);
-                        intent2.putExtra("mais",correeo);
-                        intent2.putExtra("usus",user);
+
 
 
                         startActivity(intent2);
@@ -102,9 +139,8 @@ public class lista extends AppCompatActivity {
                     case(4):Intent intent3= new Intent(lista.this, loggin.class);
                         editor.putInt("var",-1);
                         editor.commit();
-
                         startActivity(intent3);
-                         finish();
+                        finish();
                         break;
                 }
                 if (i != 3) {
@@ -137,19 +173,19 @@ public class lista extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case(0):editor.putInt("val",0);
-
+                        editor.putInt("pro",idp[0]);
                         break;
                     case(1):editor.putInt("val",1);
-
+                        editor.putInt("pro",idp[1]);
                         break;
                     case(2):editor.putInt("val",2);
-
+                        editor.putInt("pro",idp[2]);
                         break;
                     case(3):editor.putInt("val",3);
-
+                        editor.putInt("pro",idp[3]);
                         break;
                     case(4):editor.putInt("val",4);
-
+                        editor.putInt("pro",idp[4]);
                         break;
 
                 } editor.commit();

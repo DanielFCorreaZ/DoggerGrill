@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ListView listView;
     private ActionBarDrawerToggle drawerToggle;
-    String user,correeo;
+   // String user,correeo;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
     @Override
@@ -55,29 +55,19 @@ public class MainActivity extends AppCompatActivity {
                 switch (i){
                     case(0): //fragment = new SupermanFragment();
                         Intent intent= new Intent(MainActivity.this, miperfil.class);
-                        intent.putExtra("mais",correeo);
-                        intent.putExtra("usus",user);
-
-
                         startActivity(intent);
-
+                        finish();
                         break;
                     case(1): //fragment = new BatmanFragment();
                         Intent intent1= new Intent(MainActivity.this, lista.class);
-                        intent1.putExtra("mais",correeo);
-                        intent1.putExtra("usus",user);
                         startActivity(intent1);
+                        finish();
                         break;
                     case(2): //fragment = new FlashFragment();
 
                         break;
                     case(3): Intent intent2= new Intent(MainActivity.this, clasi.class);
-                        intent2.putExtra("mais",correeo);
-                        intent2.putExtra("usus",user);
-
-
                         startActivity(intent2);
-                       // finish();
                         break;
                     case(4):Intent intent3= new Intent(MainActivity.this, loggin.class);
                         editor.putInt("var",-1);
@@ -111,9 +101,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        Bundle extras=getIntent().getExtras();
-        user = extras.getString("usus");
-        correeo = extras.getString("mais");
+
 
 
         ActionBar.TabListener tabListener = new ActionBar.TabListener() {
@@ -132,14 +120,14 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        ActionBar.Tab tab = actionBar.newTab().setIcon(R.drawable.ham).setTabListener(tabListener);
-        actionBar.addTab(tab);
+        ActionBar.Tab tab1 = actionBar.newTab().setIcon(R.drawable.ham).setTabListener(tabListener);
+        actionBar.addTab(tab1);
 
-        tab = actionBar.newTab().setIcon(R.drawable.dogger3).setTabListener(tabListener);
-        actionBar.addTab(tab);
+        tab1 = actionBar.newTab().setIcon(R.drawable.dogger3).setTabListener(tabListener);
+        actionBar.addTab(tab1);
 
-        tab = actionBar.newTab().setIcon(R.drawable.cost).setTabListener(tabListener);
-        actionBar.addTab(tab);
+        tab1 = actionBar.newTab().setIcon(R.drawable.cost).setTabListener(tabListener);
+        actionBar.addTab(tab1);
 
         vp.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override

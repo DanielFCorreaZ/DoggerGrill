@@ -1,8 +1,11 @@
 package com.danielcorrea.doggergrill;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -20,12 +23,20 @@ public class loggin extends AppCompatActivity {
     SharedPreferences.Editor editor;
 
     EditText usser,paass;
-    String user,contrasena, correeo;
+    int id;
+    String contrasena, correeo, contra="",correo,useer,pas;
     int l=0,t=0;
+
+    ContentValues dataBD;
+    SQLiteDatabase dbContactos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loggin);
+
+        ContactosSQLiteHelper contactos = new ContactosSQLiteHelper(this,"ContactosBD", null, 1);
+        dbContactos = contactos.getWritableDatabase();
+
 
         prefs=getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
         editor=prefs.edit();
@@ -35,16 +46,9 @@ public class loggin extends AppCompatActivity {
         paass = (EditText)findViewById(R.id.paass);
         usser = (EditText) findViewById(R.id.usser);
 
-       // reg.setOnClickListener((View.OnClickListener) this);
-        //ok.setOnClickListener((View.OnClickListener) this);
+
         if((prefs.getInt("var",-1)==1)){
             Intent intent= new Intent(loggin.this,lista.class);
-            user=prefs.getString("user","");
-            correeo=prefs.getString("mail","");
-
-            intent.putExtra("usus",user);
-            intent.putExtra("mais",correeo);
-
             startActivity(intent);
             finish();
         }
@@ -53,24 +57,31 @@ public class loggin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String useer=usser.getText().toString();
-                String pas=paass.getText().toString();
+                useer=usser.getText().toString();
+                 pas=paass.getText().toString();
 
                 if(TextUtils.isEmpty(useer)) {
                      t=0;
                    Toast.makeText(getApplicationContext(), "No ha ingresado el nombre de usuario" ,Toast.LENGTH_SHORT).show();
-                } else{
-                        if(useer.equals(prefs.getString("user",""))){
-                             t=1;
+                } else{Cursor c = dbContactos.rawQuery("select * from Contactos where nombre='"+useer+"'",null);
+                    if(c.moveToFirst()) {
+                        id = c.getInt(0);
+                        contra = c.getString(2);
+                        correo = c.getString(3);
+                    }
+                        if(TextUtils.isEmpty(contra)){
+                            Toast.makeText(getApplicationContext(), "El nombre de usuario no se encuentra registrado" ,Toast.LENGTH_SHORT).show();
+
+
                         }else{
-                            Toast.makeText(getApplicationContext(), "No ha ingresado el nombre de usuario correcto" ,Toast.LENGTH_SHORT).show();
+                            t=1;
                         }
                 }
                 if(TextUtils.isEmpty(pas)) {
                      l=0;
                     Toast.makeText(getApplicationContext(), "No ha ingresado la contraseña" ,Toast.LENGTH_SHORT).show();
                 } else{
-                    if(pas.equals(prefs.getString("pass",""))){
+                    if(pas.equals(contra)){
                          l=1;
                     }else{
                         Toast.makeText(getApplicationContext(), "No ha ingresado la contraseña correcta" ,Toast.LENGTH_SHORT).show();
@@ -80,13 +91,11 @@ public class loggin extends AppCompatActivity {
 
                 if((l==1 && t==1)){
                     Intent intent= new Intent(loggin.this,lista.class);
-                    user=prefs.getString("user","");
-                    correeo=prefs.getString("mail","");
-                    intent.putExtra("usus",user);
-                    intent.putExtra("mais",correeo);
+                    editor.putInt("num",id);
+
                     editor.putInt("var",1);
                     editor.commit();
-                    Log.d("var","var");
+
                     startActivity(intent);
                     finish();
                 }
@@ -99,7 +108,7 @@ public class loggin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent inten = new Intent(loggin.this,register.class);
-                startActivityForResult(inten,012);
+                startActivity(inten);
             }
         });
 
@@ -118,27 +127,7 @@ public class loggin extends AppCompatActivity {
         }
 
     }*/
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 012 && resultCode == RESULT_OK){
-             user = data.getExtras().getString("usuario");
-            correeo = data.getExtras().getString("mail");
-             contrasena = data.getExtras().getString("contrasena");
-            editor.putString("user",user);
-            editor.putString("pass",contrasena);
-            editor.putString("mail",correeo);
-            editor.commit();
-            //Log.d("user",user);
-            //Log.d("contraseña",contrasena);
-            //Toast.makeText(this, "user: "+user+" contrasena: "+contrasena,Toast.LENGTH_SHORT).show();
-        }
-        if (requestCode==012 && resultCode == RESULT_CANCELED){
-            Log.d("mensaje","no se cargaron datos");
 
-        }
-
-
-    }
 
 
 

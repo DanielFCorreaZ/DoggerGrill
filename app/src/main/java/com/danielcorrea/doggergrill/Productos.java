@@ -6,6 +6,9 @@ package com.danielcorrea.doggergrill;
 public class Productos {
     private int idima;
     private String nombre, descripcion,precio;
+    public Productos(){
+
+    }
 
     public Productos(int idima, String precio, String nombre, String descripcion){
         this.idima=idima;

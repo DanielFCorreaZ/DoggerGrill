@@ -21,7 +21,8 @@
         <activity android:name=".miperfil" />
         <activity android:name=".lista" />
         <activity android:name=".clasi" />
-        <activity android:name=".prom"></activity>
+        <activity android:name=".prom" />
+        <activity android:name=".perfilfrag" />
     </application>
 
 </manifest>

@@ -57,8 +57,6 @@ public class clasi extends AppCompatActivity {
                 switch (i){
                     case(0): //fragment = new SupermanFragment();
                         Intent intent2= new Intent(clasi.this, miperfil.class);
-                        intent2.putExtra("mais",nomb);
-                        intent2.putExtra("usus",mais);
 
 
                         startActivity(intent2);
@@ -66,15 +64,13 @@ public class clasi extends AppCompatActivity {
                         break;
                     case(1): //fragment = new BatmanFragment();
                         Intent intent=new Intent(clasi.this,lista.class);
-                        intent.putExtra("usus",nomb);
-                        intent.putExtra("mais",mais);
+
                         startActivity(intent);
                         break;
 
                     case(2): //fragment = new FlashFragment();
                         Intent intent1=new Intent(clasi.this,MainActivity.class);
-                        intent1.putExtra("usus",nomb);
-                        intent1.putExtra("mais",mais);
+
                         startActivity(intent1);
                         break;
                     case(3):
@@ -105,9 +101,7 @@ public class clasi extends AppCompatActivity {
 
 
 
-        Bundle extra =getIntent().getExtras();
-        mais=extra.getString("mais");
-        nomb=extra.getString("usus");
+
 
         most=(TextView) findViewById(R.id.casi3);
         uno=(Button) findViewById(R.id.calis);
